@@ -2,42 +2,37 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-
+import java.util.List;
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException  {
+        // 여기에 코드를 작성해주세요.
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        ArrayList<Integer> list = new ArrayList<>();
         
-        String input;
-        while ((input = br.readLine()) != null && !input.isEmpty()) {
-            String[] parts = input.split(" ");
-            String command = parts[0];
+        int n = Integer.parseInt(br.readLine());
 
-            switch (command) {
+        List<Integer> arr = new ArrayList<>();
+
+        for(int i = 0; i < n; i++) {
+            String[] read = br.readLine().split(" ");
+
+            switch(read[0]) {
                 case "push_back":
-                    int value = Integer.parseInt(parts[1]);
-                    list.add(value);
+                    int num = Integer.parseInt(read[1]);
+                    arr.add(num);
                     break;
-
+                
                 case "pop_back":
-                    if (!list.isEmpty()) {
-                        list.remove(list.size() - 1);
-                    }
+                    arr.remove(arr.size() -1);
                     break;
-
+                
                 case "get":
-                    int index = Integer.parseInt(parts[1]);
-                    if (index - 1 >= 0 && index - 1 < list.size()) {
-                        System.out.println(list.get(index - 1));
-                    } else {
-                        System.out.println("Index out of bounds");
-                    }
+                    System.out.println(arr.get(Integer.parseInt(read[1]) -1));
                     break;
 
                 case "size":
-                    System.out.println(list.size());
+                    System.out.println(arr.size());
                     break;
             }
-        }
+        }        
     }
 }
