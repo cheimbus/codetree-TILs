@@ -14,12 +14,13 @@ public class Main {
         for(String s : sArr) {
             if(stack.isEmpty() && s.equals(")")) {
                 System.out.println("No");
+                stack.push(s);
                 break;
             }
             if(s.equals("(")) stack.push(s);
             if(!stack.isEmpty() && s.equals(")")) stack.pop(); 
         }
         if(!stack.isEmpty()) System.out.println("No");
-        if(stack.isEmpty()) System.out.println("Yes");
+        else System.out.println("Yes");
     }
 }
