@@ -14,6 +14,7 @@ public class Main {
         for(String s : sArr) {
             if(stack.isEmpty() && s.equals(")")) {
                 System.out.println("No");
+                break;
             }
             if(s.equals("(")) stack.push(s);
             if(!stack.isEmpty() && s.equals(")")) stack.pop(); 
