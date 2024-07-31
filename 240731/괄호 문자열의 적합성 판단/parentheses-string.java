@@ -11,16 +11,19 @@ public class Main {
 
         String[] sArr = br.readLine().split("");
 
+        String answer = "";
         for(String s : sArr) {
             if(stack.isEmpty() && s.equals(")")) {
-                System.out.println("No");
+                answer = "No";
                 stack.push(s);
                 break;
             }
             if(s.equals("(")) stack.push(s);
             if(!stack.isEmpty() && s.equals(")")) stack.pop(); 
         }
-        if(!stack.isEmpty()) System.out.println("No");
-        else System.out.println("Yes");
+        if(!stack.isEmpty()) answer = "No";
+        else answer = "Yes";
+
+        System.out.println(answer);
     }
 }
