@@ -20,6 +20,6 @@ public class Main {
             if(!stack.isEmpty() && s.equals(")")) stack.pop(); 
         }
         if(!stack.isEmpty()) System.out.println("No");
-        else System.out.println("Yes");
+        if(stack.isEmpty()) System.out.println("Yes");
     }
 }
