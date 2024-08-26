@@ -1,40 +1,38 @@
-import java.io.IOException;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
+
 public class Main {
-
-    public static int n, k;
-    public static List<Integer> answer = new ArrayList<>();
-    
-    public static void print() {
-        for(int i : answer) {
-            System.out.print(i + " ");
-        }
-        System.out.println();
-    }
-
-    public static void findPermutations(int curNum) {
-        if(curNum == n) {
-            print();
-            return;
-        }
-
-        for(int i = 1; i <= k; i++) {
-            answer.add(i);
-            findPermutations(curNum +1);
-            answer.remove(answer.size() -1);
-        }
-    }
+    public static int k,n;
+    public static ArrayList<Integer> list = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer stk = new StringTokenizer(br.readLine());
-        k = Integer.parseInt(stk.nextToken());
-        n = Integer.parseInt(stk.nextToken());
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        k = Integer.parseInt(st.nextToken());
+        n = Integer.parseInt(st.nextToken());
 
-        findPermutations(0);
+        choice(0);
+    }
+
+    private static void choice(int i) {
+        if(i==n){
+            print();
+            return;
+        }
+        for(int j=1;j<=k;j++){
+            list.add(j);
+            choice(i+1);
+            list.remove(list.size()-1);
+        }
+    }
+    private static void print() {
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<n;i++){
+            sb.append(list.get(i)).append(" ");
+        }
+        System.out.println(sb);
     }
 }
