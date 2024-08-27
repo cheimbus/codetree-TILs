@@ -12,16 +12,13 @@ public class Main {
     public static boolean beautifulNum() {
         for(int i = 0; i < n; i += selectedNum.get(i)) {
             int target = selectedNum.get(i);
-            int cnt = selectedNum.get(i);
+            int cnt = 0;
             for(int j = i; j < n; j++) {
                 if(target == selectedNum.get(j)) {
-                    cnt --;
-                    if(cnt == 0) {
-                        continue;
-                    }
-                    else {
-                        return false;
-                    }
+                    cnt ++;
+                }
+                if(cnt != target) {
+                    return false;
                 }
             }
         }
