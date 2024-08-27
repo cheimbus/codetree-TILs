@@ -17,7 +17,7 @@ public class Main {
         for(int j = i; j < n; j++) {
             if(selectedNum.get(j) == target) {
                 cnt++;
-                if(cnt == target) break;
+                if(cnt == target) continue;
             }
         }
 
@@ -48,7 +48,6 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         n = Integer.parseInt(br.readLine());
-
         permutations(0);
 
         System.out.print(answer);
