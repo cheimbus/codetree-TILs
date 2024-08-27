@@ -17,6 +17,7 @@ public class Main {
         for(int j = i; j < n; j++) {
             if(selectedNum.get(j) == target) {
                 cnt++;
+                if(cnt == target) break;
             }
         }
 
