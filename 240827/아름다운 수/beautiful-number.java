@@ -8,8 +8,19 @@ public class Main {
     public static int answer;
     public static boolean beatifulNum() {
         for(int i = 0; i < n; i += selectedNum.get(i)) {
-            for(int j = i; j < i + selectedNum.get(i); j++) {
-                System.out.println(selectedNum.get(j));
+            int cnt = selectedNum.get(i);
+            for(int j = i; j < n; j++) {
+                if(selectedNum.get(i) == selectedNum.get(j)) {
+                    cnt --;
+                    if(cnt == 0) {
+                        break;
+                    }
+                }else {
+                    return false;
+                }
+            }
+            if(cnt != 0) {
+                return false;
             }
         }
         return true;
@@ -17,7 +28,9 @@ public class Main {
 
     public static void permutations(int num) {
         if(num == n) {
-            beatifulNum();
+            if(beatifulNum()) {
+                answer++;
+            }
             return;
         }
         for(int i = 1; i <= 4; i++) {
