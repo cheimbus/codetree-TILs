@@ -10,20 +10,22 @@ public class Main {
     public static int answer;
 
     public static boolean beautifulNum() {
-        for(int i = 0; i < n; i += selectedNum.get(i)) {
-            int target = selectedNum.get(i);
-            int cnt = 0;
-            for(int j = i; j < n; j++) {
-                if(target == selectedNum.get(j)) {
-                    cnt ++;
-                }
-                if(cnt != target) {
-                    return false;
-                }
+    for(int i = 0; i < n; i += selectedNum.get(i)) {
+        int target = selectedNum.get(i);
+        int cnt = 0;
+
+        for(int j = i; j < n; j++) {
+            if(selectedNum.get(j) == target) {
+                cnt++;
             }
         }
-        return true;
+
+        if(cnt != target) {
+            return false;
+        }
     }
+    return true;
+}
 
     public static void permutations(int num) {
         
