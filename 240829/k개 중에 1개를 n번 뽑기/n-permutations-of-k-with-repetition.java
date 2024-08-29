@@ -3,16 +3,18 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import java.util.ArrayList;
+
 public class Main {
 
     public static int K,N;
     public static ArrayList<Integer> selectedNum = new ArrayList<>();
+    public static StringBuilder sb = new StringBuilder();
 
     public static void print() {
-        for(int i : selectedNum) {
-            System.out.print(i + " ");
+        for(int i: selectedNum) {
+            sb.append(i).append(" ");
         }
-        System.out.println();
+        sb.append("\n");
     }
 
     public static void permutation(int num) {
@@ -37,5 +39,7 @@ public class Main {
         N = Integer.parseInt(stk.nextToken());
 
         permutation(0);
+
+        System.out.print(sb);
     }
 }
