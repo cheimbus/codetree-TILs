@@ -48,12 +48,10 @@ public class Main {
         
         for(int i = 0; i < N; i++) {
             stk = new StringTokenizer(br.readLine());
-            for(int j = 0; j < N; j++) {
+            for(int j = 0; j < M; j++) {
                 int next = Integer.parseInt(stk.nextToken());
                 grid[i][j] = next;
-                System.out.print(next);
             }
-            System.out.println();
         }
 
         visited[0][0] = 1;
