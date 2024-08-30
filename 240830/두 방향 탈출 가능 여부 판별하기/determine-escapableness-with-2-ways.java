@@ -51,7 +51,9 @@ public class Main {
             for(int j = 0; j < N; j++) {
                 int next = Integer.parseInt(stk.nextToken());
                 grid[i][j] = next;
+                System.out.print(next);
             }
+            System.out.println();
         }
 
         visited[0][0] = 1;
