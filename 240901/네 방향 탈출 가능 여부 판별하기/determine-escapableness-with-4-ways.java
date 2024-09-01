@@ -10,8 +10,8 @@ public class Main {
     public static int[][] grid;
     public static boolean[][] visited;
     public static Queue<Pair> q = new LinkedList<>();
-    public static int[] dx = new int[]{1, 0};
-    public static int[] dy = new int[]{0, 1};
+    public static int[] dx = new int[]{1, 0, -1, 0};
+    public static int[] dy = new int[]{0, 1, 0, -1};
 
      static class Pair {
         int x, y;
@@ -70,9 +70,9 @@ public class Main {
         }
 
         push(0, 0);
-        BFS();
+        BFS();   
 
-        if(visited[N-1][M-1] != false) System.out.print(0);
-        else System.out.print(1);
+        int answer = visited[N-1][M-1] ? 1 : 0;
+        System.out.print(answer);
     }
 }
