@@ -33,7 +33,7 @@ public class Main {
         if(visited[x][y] || grid[x][y] == 0) {
             return false;
         }
-        else return true;
+        return true;
     }
 
     public static void BFS() {
@@ -71,13 +71,6 @@ public class Main {
 
         push(0, 0);
         BFS();
-
-        for(int i = 0; i < N; i++) {
-            for(int j = 0; j < M; j++) {
-                System.out.print(visited[i][j] +" ");
-            }
-            System.out.println();
-        }
 
         if(visited[N-1][M-1] != false) System.out.print(0);
         else System.out.print(1);
