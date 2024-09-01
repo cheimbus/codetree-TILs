@@ -10,9 +10,8 @@ public class Main {
     public static int[][] grid;
     public static boolean[][] visited;
     public static Queue<Pair> q = new LinkedList<>();
-    public static int order = 1;
-    public static int[] dx = new int[2];
-    public static int[] dy = new int[2];
+    public static int[] dx = new int[]{1, 0};
+    public static int[] dy = new int[]{0, 1};
 
      static class Pair {
         int x, y;
@@ -27,13 +26,13 @@ public class Main {
         q.add(new Pair(x, y));
     }
 
-    public static boolean isRange(int x, int y) {
-        if(x < 0 || x >= N || y < 0 || y >= M) return false;
-        else return true;
-    }
-
     public static boolean canGo(int x, int y) {
-        if(isRange(x, y) || visited[x][y] || grid[x][y] == 0) return false;
+        if(x < 0 || x >= N || y < 0 || y >= M) {
+            return false;
+        }
+        if(visited[x][y] || grid[x][y] == 0) {
+            return false;
+        }
         else return true;
     }
 
@@ -44,7 +43,7 @@ public class Main {
             int y = newVertax.y;
             for(int i = 0; i < dx.length; i++) {
                 int newX = x + dx[i];
-                int newY = y + dx[i];
+                int newY = y + dy[i];
                 if(canGo(newX, newY)) {
                     push(newX, newY);
                 }
@@ -60,7 +59,7 @@ public class Main {
         M = Integer.parseInt(stk.nextToken());
 
         visited = new boolean[N][M];
-        grid = new int[N][N];
+        grid = new int[N][M];
 
         for(int i = 0; i < N; i++) {
             stk = new StringTokenizer(br.readLine());
