@@ -23,7 +23,7 @@ public class Main {
     public static Queue<Pair> q = new LinkedList<>();
 
     public static boolean canGo(int col, int row) {
-        if(col < 1 || col > n || row < 1 || row > n) {
+        if(col <= 0 || col > n || row <= 0 || row > n) {
             return false;
         }
         if(grid[col][row] == 1) {
@@ -49,6 +49,7 @@ public class Main {
             }
             q.add(new Pair(col, row));
         }
+        q.remove();
     }
 
     public static void main(String[] args) throws IOException {
@@ -59,7 +60,6 @@ public class Main {
         k = Integer.parseInt(stk.nextToken());
 
         grid = new int[n+1][n+1];
-        visited = new boolean[n+1][n+1];
 
         for(int i = 1; i <= n; i++) {
             stk = new StringTokenizer(br.readLine());
