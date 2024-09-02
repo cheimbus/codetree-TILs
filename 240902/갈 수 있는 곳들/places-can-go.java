@@ -77,7 +77,7 @@ public class Main {
 
             if(n == 1 && grid[col - 1][row - 1] == 0) cnt++;
 
-            if(visited[col - 1][row - 1]) cnt++;
+            if(!visited[col - 1][row - 1]) cnt++;
             push(col - 1, row - 1);
             BFS();
         }
