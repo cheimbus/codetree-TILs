@@ -75,8 +75,6 @@ public class Main {
             int col = Integer.parseInt(stk.nextToken());
             int row = Integer.parseInt(stk.nextToken());
 
-            if(n == 1 && grid[col - 1][row - 1] == 0) cnt++;
-
             if(!visited[col - 1][row - 1]) cnt++;
             push(col - 1, row - 1);
             BFS();
