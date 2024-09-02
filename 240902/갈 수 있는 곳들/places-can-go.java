@@ -72,6 +72,8 @@ public class Main {
             stk = new StringTokenizer(br.readLine());
             int col = Integer.parseInt(stk.nextToken());
             int row = Integer.parseInt(stk.nextToken());
+            if(n == 1 && k == 1 && grid[1][1] == 0) cnt ++;
+            if(n == 1 && k == 1 && grid[1][1] == 1) return;
             push(col, row);
             BFS(col, row);
         }
