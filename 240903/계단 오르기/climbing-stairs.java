@@ -17,6 +17,7 @@ public class Main {
             dp[i] = dp[i - 2] + dp[i - 3];
         }
         
-        System.out.print(dp[n]);
+        int answer = dp[n] % 10007;
+        System.out.print(answer);
     }
 }
