@@ -22,9 +22,9 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
 
-        dp = new int[n];
+        dp = new int[45];
 
-        for(int i = 0; i <= n; i++) {
+        for(int i = 0; i < 45; i++) {
             dp[i] = -1;
         }
         dp[0] = 1;
