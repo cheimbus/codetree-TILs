@@ -14,10 +14,11 @@ public class Main {
         dp[3] = 1;
 
         for(int i = 4; i < dp.length; i++) {
-            dp[i] = dp[i - 2] + dp[i - 3];
+            dp[i] = (dp[i - 2] + dp[i - 3]) % 10007;
         }
         
-        int answer = dp[n] % 10007;
+        long answer = dp[n];
+
         System.out.print(answer);
     }
 }
