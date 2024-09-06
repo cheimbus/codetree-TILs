@@ -34,8 +34,8 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer stk = new StringTokenizer(br.readLine());
         
-        n = Integer.parseInt(stk.nextToken());
         k = Integer.parseInt(stk.nextToken());
+        n = Integer.parseInt(stk.nextToken());
 
         permutation(0);
 
