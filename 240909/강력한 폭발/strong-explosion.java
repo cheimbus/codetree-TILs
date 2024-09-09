@@ -18,9 +18,9 @@ public class Main {
     public static int[][] bombType = new int[MAX_VALUE][MAX_VALUE];
     public static Pair[][] bombShape = {
         {},
-        {new Pair(-2, 0), new Pair(-1, 0), new Pair(0, 0), new Pair(-1, 0), new Pair(-2, 0)},
-        {new Pair(-1, -1), new Pair(-1, 1), new Pair(0, 0), new Pair(1, -1), new Pair(1, 1)},
-        {new Pair(-1, 0), new Pair(0, -1), new Pair(0, 0), new Pair(0, 1), new Pair(1, 0)}
+        {new Pair(-2, 0), new Pair(-1, 0), new Pair(0, 0), new Pair(1, 0), new Pair(2, 0)},
+        {new Pair(-1, 0), new Pair(1, 0), new Pair(0, 0), new Pair(0, -1), new Pair(0, 1)},
+        {new Pair(-1, -1), new Pair(-1, 1), new Pair(0, 0), new Pair(1, -1), new Pair(1, 1)}
     };
     public static boolean[][] bombArea = new boolean[MAX_VALUE][MAX_VALUE];
 
