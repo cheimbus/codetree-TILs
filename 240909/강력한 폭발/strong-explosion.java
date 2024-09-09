@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import java.util.ArrayList;
 public class Main {
+
     static class Pair {
         int x,y;
         public Pair(int x, int y) {
@@ -11,18 +12,20 @@ public class Main {
             this.y = y;
         }
     }
+
     public static int n;
-    public static int MAX_VALUE = 20;
-    public static int ans = 0;
-    public static ArrayList<Pair> bombList;
-    public static int[][] bombType = new int[MAX_VALUE][MAX_VALUE];
+    public static ArrayList<Integer>[] grid;
+    public static ArrayList<Pair> bombPos = new ArrayList<>();
+    public static int ans;
+    public static int MAX_NUM = 20;
+    public static int[][] bombType = new int[MAX_NUM][MAX_NUM];
+    public static boolean[][] bombArea = new boolean[MAX_NUM][MAX_NUM];
     public static Pair[][] bombShape = {
         {},
         {new Pair(-2, 0), new Pair(-1, 0), new Pair(0, 0), new Pair(1, 0), new Pair(2, 0)},
         {new Pair(-1, 0), new Pair(1, 0), new Pair(0, 0), new Pair(0, -1), new Pair(0, 1)},
         {new Pair(-1, -1), new Pair(-1, 1), new Pair(0, 0), new Pair(1, -1), new Pair(1, 1)}
     };
-    public static boolean[][] bombArea = new boolean[MAX_VALUE][MAX_VALUE];
 
     public static boolean inRange(int x, int y) {
         return x >= 0 && x < n && y >= 0 && y < n;
@@ -58,19 +61,18 @@ public class Main {
                 }
             }
         }
-
         return cnt;
     }
 
     public static void findBombArea(int cnt) {
-        if(cnt == bombList.size()) {
+        if(cnt == bombPos.size()) {
             ans = Math.max(ans, calc());
             return;
         }
 
         for(int i = 1; i <= 3; i++) {
-            int x = bombList.get(cnt).x;
-            int y = bombList.get(cnt).y;
+            int x = bombPos.get(cnt).x;
+            int y = bombPos.get(cnt).y;
             bombType[x][y] = i;
             findBombArea(cnt + 1);
             bombType[x][y] = 0;
@@ -80,16 +82,26 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer stk = new StringTokenizer(br.readLine());
+
         n = Integer.parseInt(stk.nextToken());
 
-        bombList = new ArrayList<>();
+        grid = new ArrayList[n];
+        for(int i = 0; i < n; i++) {
+            grid[i] = new ArrayList<>();
+        }
 
         for(int i = 0; i < n; i++) {
             stk = new StringTokenizer(br.readLine());
             for(int j = 0; j < n; j++) {
                 int num = Integer.parseInt(stk.nextToken());
-                if(num == 1) {
-                    bombList.add(new Pair(i, j));
+                grid[i].add(num);
+            }
+        }
+
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                if(grid[i].get(j) > 0) {
+                    bombPos.add(new Pair(i, j));
                 }
             }
         }
