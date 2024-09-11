@@ -38,6 +38,7 @@ public class Main {
             int vtx1 = Integer.parseInt(stk.nextToken());
             int vtx2 = Integer.parseInt(stk.nextToken());
             graph[vtx1].add(vtx2);
+            graph[vtx2].add(vtx1);
         }
 
         int first = 1;
