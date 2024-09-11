@@ -23,8 +23,8 @@ public class Main {
         int bx1 = seg2.x;
         int bx2 = seg2.y;
 
-        return (ax1 <= bx1 && ax2 >= bx2) || (ax1 >= bx1 && ax2 <= bx2) ||
-        (bx1 <= ax1 && bx2 >= ax2) || (bx1 >= ax1 && bx2 <= ax2);
+        return (ax1 <= bx1 && bx1 <= ax2) || (ax1 <= bx2 && bx2 <= ax2) ||
+            (bx1 <= ax1 && ax1 <= bx2) || (bx1 <= ax2 && ax2 <= bx2);
     }
 
     public static boolean possible() {
@@ -55,7 +55,7 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer stk = new StringTokenizer(br.readLine());
         n = Integer.parseInt(stk.nextToken());
-        segment = new Pair[15];
+        segment = new Pair[n];
 
         for(int i = 0; i < n; i++) {
             stk = new StringTokenizer(br.readLine());
