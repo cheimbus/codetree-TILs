@@ -55,7 +55,7 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer stk = new StringTokenizer(br.readLine());
         n = Integer.parseInt(stk.nextToken());
-        segment = new Pair[n];
+        segment = new Pair[15];
 
         for(int i = 0; i < n; i++) {
             stk = new StringTokenizer(br.readLine());
