@@ -66,10 +66,12 @@ public class Main {
             }
         });
 
-        Pair maxValue = restore.get(0);
-        x1 = maxValue.x;
-        y1 = maxValue.y;
-        v1 = maxValue.v;
+        if(!restore.isEmpty()) {
+            Pair maxValue = restore.get(0);
+            x1 = maxValue.x;
+            y1 = maxValue.y;
+            v1 = maxValue.v;
+        }
     }
 
     public static void BFS() {
