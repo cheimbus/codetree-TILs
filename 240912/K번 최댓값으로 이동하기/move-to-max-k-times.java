@@ -22,7 +22,7 @@ public class Main {
 
     public static final int DELTA_LEN = 4;
     public static int n, k, x1, y1, v1;
-    public static ArrayList<Integer>[] grid;
+    public static int[][] grid;
     public static Queue<Pair> q = new LinkedList<>();
     public static int[] dx = new int[]{1, 0, -1, 0};
     public static int[] dy = new int[]{0, 1, 0, -1};
@@ -37,19 +37,13 @@ public class Main {
         if(!inRange(x, y)) {
             return false;
         }
-        if(visited[x][y] || grid[x].get(y) >= v1) {
+        if(visited[x][y] || grid[x][y] >= v1) {
             return false;
         }
         return true;
     }
 
     public static void remover() {
-        for(int i = 0; i < n; i++) {
-            for(int j = 0; j < n; j++) {
-                visited[i][j] = false;
-            }
-        }
-
         restore.clear();
     }
 
@@ -75,13 +69,14 @@ public class Main {
     }
 
     public static void BFS() {
+        visited = new boolean[n][n];
         while(!q.isEmpty()) {
             Pair coordinate = q.poll();
             for(int i = 0; i < DELTA_LEN; i++) {
                 int nx = coordinate.x + dx[i];
                 int ny = coordinate.y + dy[i];
                 if(canGo(nx, ny)) {
-                    int nv = grid[nx].get(ny);
+                    int nv = grid[nx][ny];
                     visited[nx][ny] = true;
                     q.add(new Pair(nx, ny));
                     restore.add(new Pair(nx, ny, nv));
@@ -97,25 +92,21 @@ public class Main {
 
         n = Integer.parseInt(stk.nextToken());
         k = Integer.parseInt(stk.nextToken());
-        grid = new ArrayList[n];
+        grid = new int[n][n];
         visited = new boolean[n][n];
-        
-        for(int i = 0; i < n; i++) {
-            grid[i] = new ArrayList<>();
-        }
 
         for(int i = 0; i < n; i++) {
             stk = new StringTokenizer(br.readLine());
             for(int j = 0; j < n; j++) {
                 int num = Integer.parseInt(stk.nextToken());
-                grid[i].add(num);
+                grid[i][j] = num;
             }
         }
 
         stk = new StringTokenizer(br.readLine());
         x1 = Integer.parseInt(stk.nextToken()) -1;
         y1 = Integer.parseInt(stk.nextToken()) -1;
-        v1 = grid[x1].get(y1);
+        v1 = grid[x1][y1];
         for(int i = 0; i < k; i++) {
             q.add(new Pair(x1, y1));
             visited[x1][y1] = true;
