@@ -32,6 +32,8 @@ public class Main {
                         if(canGo(nx, ny)) {
                             canCnt++;
                             addVal += grid[nx][ny];
+                        } else {
+                            break;
                         }
                         if(canCnt == 3) {
                             val = addVal;
