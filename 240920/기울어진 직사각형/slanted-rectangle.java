@@ -51,7 +51,7 @@ public class Main {
         for(int i = 0; i < n; i++) {
             for(int j = 0; j < n; j++) {
                 for(int k = 1; k < n; k++) {
-                    for(int l = 0; l < n; l++) {
+                    for(int l = 1; l < n; l++) {
                         maxVal = Math.max(maxVal, findMaxVal(i, j, k, l));
                     }
                 }
