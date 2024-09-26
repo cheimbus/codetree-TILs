@@ -6,6 +6,7 @@ import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
 public class Main {
+    public static final int MIN_VAL = Integer.MIN_VALUE;
     public static final int MAX_VAL = 5;
     public static int n,m;
     public static int[][] grid = new int[MAX_VAL][MAX_VAL];
@@ -13,7 +14,7 @@ public class Main {
 
 
     public static int rectSum(int x1, int y1, int x2, int y2) {
-        int rectSum = 0;
+        int rectSum = MIN_VAL;
 
         for(int i = x1; i <= x2; i ++) {
             for(int j = y1; j <= y2; j ++) {
@@ -59,7 +60,7 @@ public class Main {
     }
 
     public static int findMaxSum(int x1, int y1, int x2, int y2) {
-        int maxSum = 0;
+        int maxSum = MIN_VAL;
 
         for(int i = 0; i < n; i ++) {
             for(int j = 0; j < m; j ++) {
@@ -76,7 +77,7 @@ public class Main {
         return maxSum;
     }
     public static int findMaxSum() {
-        int maxSum = 0;
+        int maxSum = MIN_VAL;
 
         for(int i = 0; i < n; i ++) {
             for(int j = 0; j < m; j ++) {
