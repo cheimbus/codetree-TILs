@@ -12,7 +12,7 @@ public class Main {
     public static int[][] grid = new int[MAX_VAL][MAX_VAL];
 
     public static boolean isMinus(int x1, int y1) {
-        return grid[x1][y1] < 0;
+        return grid[x1][y1] <= 0;
     }
 
     public static boolean checkRect(int x1, int y1, int x2, int y2) {
@@ -41,7 +41,7 @@ public class Main {
     }
 
     public static int findMaxVal() {
-        int maxVal = MIN_VAL;
+        int maxVal = 0;
 
         for(int i = 0; i < n; i ++) {
             for(int j = 0; j < m; j ++) {
@@ -76,7 +76,9 @@ public class Main {
 
         int ans = findMaxVal();
 
-        bw.write(ans + "\n");
+        int res = ans == 0 ? -1 : ans;
+
+        bw.write(res + "\n");
 
         bw.flush();
         bw.close();
