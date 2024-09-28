@@ -10,7 +10,7 @@ public class Main {
     public static final int RIGHT_SHIFT = 1;
     public static final int LEFT_SHIFT = 0;
     public static int n, m, q;
-    public static int[][] grid = new int[MAX_VAL][MAX_VAL];
+    public static int[][] grid = new int[MAX_VAL + 1][MAX_VAL + 1];
 
     public static void shift(int row, int dir) {
         // 오른쪽
