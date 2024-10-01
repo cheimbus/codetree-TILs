@@ -35,7 +35,7 @@ public class Main {
     }
 
     public static void continuedBomb() {
-        for(int i = 0; i < N - 1; i ++) {
+        for(int i = 0; i < N; i ++) {
             if(arr[i] == 0) continue;
             int pos = i;
             int sameNum = 0;
