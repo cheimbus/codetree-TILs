@@ -27,17 +27,22 @@ public class Main {
         }
     }
 
-    public static void sumGrid(int row, int col) {
-        grid[row][col] = grid[row][col] + grid[row - 1][col];
-        grid[row - 1][col] = 0;
-    }
-
     public static void drop() {
         int[][] tmpGrid = new int[N][N];
 
         for(int col = 0; col < N; col ++) {
-            for(int row = N - 1; row > 0; row --) {
-                if(grid[row][col] == grid[row - 1][col]) sumGrid(row, col);
+            for(int row1 = N - 1; row1 > 0; row1 --) {
+                int tmp = grid[row1][col];
+                for(int row2 = row1 - 1; row2 >= 0; row2 --) {
+                    if(grid[row2][col] == 0) continue;
+
+                    else if(tmp == grid[row2][col]) {
+                        grid[row1][col] = grid[row1][col] * 2;
+                        grid[row2][col] = 0;
+                        break;
+                    }
+                    else break;
+                }
             }
         }
 
