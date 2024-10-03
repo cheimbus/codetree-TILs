@@ -36,7 +36,7 @@ public class Main {
         int[][] tmpGrid = new int[N][N];
 
         for(int col = 0; col < N; col ++) {
-            for(int row = N - 1; row > 1; row --) {
+            for(int row = N - 1; row > 0; row --) {
                 if(grid[row][col] == grid[row - 1][col]) sumGrid(row, col);
             }
         }
