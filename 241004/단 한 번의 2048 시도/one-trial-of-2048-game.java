@@ -7,16 +7,51 @@ import java.util.StringTokenizer;
 
 public class Main {
     public static final int N = 4;
-    public static final int ASCII_CODE = 91;
-    public static int [] dirMapper = new int[ASCII_CODE];
     public static int[][] grid = new int[N][N];
+    public static int ASCII_CODE = 91;
+    public static int[] arrMapping = new int[ASCII_CODE];
 
     public static void rotate() {
         int[][] tmpGrid = new int[N][N];
 
-        for(int i = 0; i < N; i ++) {
-            for(int j = 0; j < N; j ++) {
-                tmpGrid[i][j] = grid[N - j - 1][i];
+        for(int col = 0; col < N; col ++) {
+            for(int row = 0; row < N; row ++) {
+                tmpGrid[col][row] = grid[N - 1 - row][col];
+            }
+        }
+
+        for(int col = 0; col < N; col ++) {
+            for(int row = 0; row < N; row ++) {
+                grid[col][row] = tmpGrid[col][row];
+            }
+        }
+    }
+
+    public static void drop() {
+        int[][] tmpGrid = new int[N][N];
+
+        for(int col = 0; col < N; col ++) {
+            for(int row1 = N - 1; row1 > 0; row1 --) {
+                if(grid[row1][col] == 0) continue;
+
+                int target = grid[row1][col];
+                for(int row2 = row1 - 1; row2 >= 0; row2 --) {
+                    if(grid[row2][col] == 0) continue;
+
+                    else if(grid[row2][col] == target) {
+                        grid[row1][col] = grid[row1][col] * 2;
+                        grid[row2][col] = 0;
+                        break;
+                    }
+                    else break;
+                }
+            }
+        }
+
+        for(int col = 0; col < N; col ++) {
+            int cnt = N - 1;
+            for(int row = N - 1; row >= 0; row --) {
+                if(grid[row][col] != 0) tmpGrid[cnt--][col] = grid[row][col];
             }
         }
 
@@ -27,49 +62,13 @@ public class Main {
         }
     }
 
-    public static void drop() {
-        int[][] tmpGrid = new int[N][N];
-
-        for(int col = 0; col < N; col ++) {
-            for(int row1 = N - 1; row1 > 0; row1 --) {
-                int tmp = grid[row1][col];
-                for(int row2 = row1 - 1; row2 >= 0; row2 --) {
-                    if(grid[row2][col] == 0) continue;
-
-                    else if(tmp == grid[row2][col]) {
-                        grid[row1][col] = grid[row1][col] * 2;
-                        grid[row2][col] = 0;
-                        break;
-                    }
-                    else break;
-                }
-            }
-        }
-
-        int tmpCnt;
-        for(int col = 0; col < N; col ++) {
-            tmpCnt = N - 1;
-            for(int row = N - 1; row >= 0; row --) {
-                if(grid[row][col] != 0) {
-                    tmpGrid[tmpCnt][col] = grid[row][col];
-                    tmpCnt --;
-                }
-            }
-        }
-
-        for(int row = 0; row < N; row ++) {
-            for(int col = 0; col < N; col ++) {
-                grid[row][col] = tmpGrid[row][col];
-            }
-        }
-    }
-
-    public static void tilt(int dir) {
-
+    public static void simulation(int dir) {
         for(int i = 0; i < dir; i ++) {
             rotate();
         }
+
         drop();
+
         for(int i = 0; i < 4 - dir; i ++) {
             rotate();
         }
@@ -87,13 +86,13 @@ public class Main {
             }
         }
 
-        char curDir = br.readLine().charAt(0);
-        dirMapper['D'] = 0;
-        dirMapper['R'] = 1;
-        dirMapper['U'] = 2;
-        dirMapper['L'] = 3;
+        char dir = br.readLine().charAt(0);
+        arrMapping['D'] = 0;
+        arrMapping['R'] = 1;
+        arrMapping['U'] = 2;
+        arrMapping['L'] = 3;
 
-        tilt(dirMapper[curDir]);
+        simulation(arrMapping[dir]);
 
         StringBuilder sb = new StringBuilder();
 
