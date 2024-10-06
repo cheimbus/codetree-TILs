@@ -9,8 +9,10 @@ public class Main {
     public static final int MAX_N = 100;
     public static int n,m,k;
     public static int[][] grid = new int[MAX_N][MAX_N];
+    public static int[][] tmpGrid = new int[MAX_N][MAX_N];
 
     public static void toZero(int row1, int row2, int col) {
+
         for(int i = row1; i <= row2; i ++) {
             grid[i][col] = 0;
         }
@@ -39,7 +41,13 @@ public class Main {
     }
 
     public static void drop() {
-        int[][] tmpGrid = new int[MAX_N][MAX_N];
+
+        for(int i = 0; i < n; i ++) {
+            for(int j = 0; j < n; j ++) {
+                tmpGrid[i][j] = 0;
+            }
+        }
+
         for(int col = 0; col < n; col ++) {
             int tmpCnt = n - 1;
             for(int row = n - 1; row >= 0; row --) {
@@ -55,7 +63,12 @@ public class Main {
     }
 
     public static void tilt() {
-        int[][] tmpGrid = new int[MAX_N][MAX_N];
+
+        for(int i = 0; i < n; i ++) {
+            for(int j = 0; j < n; j ++) {
+                tmpGrid[i][j] = 0;
+            }
+        }
 
         for(int i = 0; i < n; i ++) {
             for(int j = 0; j < n; j ++) {
@@ -71,6 +84,7 @@ public class Main {
     }
 
     public static int countBomb() {
+
         int cnt = 0;
         for(int row = 0; row < n; row ++) {
             for(int col = 0; col < n; col ++) {
@@ -82,6 +96,7 @@ public class Main {
     }
 
     public static boolean isBomb() {
+
         boolean isBomb = false;
 
         for(int col = 0; col < n; col ++) {
@@ -102,6 +117,7 @@ public class Main {
     }
 
     public static int simulation() {
+
         for(int i = 0; i < k; i ++) {
             while(isBomb()) {
                 bomb();
@@ -121,6 +137,7 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer stk = new StringTokenizer(br.readLine());
