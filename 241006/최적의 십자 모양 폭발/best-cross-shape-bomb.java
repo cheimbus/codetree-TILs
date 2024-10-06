@@ -6,7 +6,7 @@ import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
 public class Main {
-    public static final int MAX_N = 4;
+    public static final int MAX_N = 100;
     public static final int B_LEN = 4;
     public static int n;
     public static int cnt = 0;
