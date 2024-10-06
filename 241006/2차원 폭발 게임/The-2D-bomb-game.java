@@ -88,8 +88,8 @@ public class Main {
             for(int row1 = 0; row1 <= n; row1 ++) {
                 if(grid[row1][col] == 0) continue;
                 int target = grid[row1][col];
-                int mCnt = 1;
-                for(int row2 = row1 + 1; row2 < n; row2 ++) {
+                int mCnt = 0;
+                for(int row2 = row1; row2 <= n; row2 ++) {
                     if(target == grid[row2][col]) {
                         mCnt ++;
                         if(mCnt == m) return true;
