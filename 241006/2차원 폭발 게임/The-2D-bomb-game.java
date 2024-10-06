@@ -25,7 +25,7 @@ public class Main {
                 if(grid[row1][col] == 0) continue;
                 int target = grid[row1][col];
                 int mCnt = 1;
-                int row2Range = 0;
+                int row2Range = row1;
                 for(int row2 = row1 + 1; row2 < n; row2 ++) {
                     if(target == grid[row2][col]) {
                         mCnt ++;
