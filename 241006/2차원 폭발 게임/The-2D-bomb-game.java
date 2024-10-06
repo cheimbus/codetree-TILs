@@ -19,7 +19,7 @@ public class Main {
     public static void bomb() {
 
         for(int col = 0; col < n; col ++) {
-            for(int row1 = 0; row1 < n - 1; row1 ++) {
+            for(int row1 = 0; row1 <= n - 1; row1 ++) {
                 if(grid[row1][col] == 0) continue;
                 int target = grid[row1][col];
                 int mCnt = 1;
