@@ -8,8 +8,8 @@ import java.util.StringTokenizer;
 public class Main {
     public static final int MAX_N = 100;
     public static int n,m,k;
-    public static int[][] grid = new int[MAX_N][MAX_N];
-    public static int[][] tmpGrid = new int[MAX_N][MAX_N];
+    public static int[][] grid = new int[MAX_N + 1][MAX_N + 1];
+    public static int[][] tmpGrid = new int[MAX_N + 1][MAX_N + 1];
 
     public static void toZero(int row1, int row2, int col) {
 
@@ -125,10 +125,10 @@ public class Main {
             }
             tilt();
             drop();
-            while(isBomb()) {
-                bomb();
-                drop();
-            }
+        }
+        while(isBomb()) {
+            bomb();
+            drop();
         }
 
         int cnt = countBomb();
