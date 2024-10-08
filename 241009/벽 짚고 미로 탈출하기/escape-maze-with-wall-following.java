@@ -7,10 +7,10 @@ import java.util.StringTokenizer;
 
 public class Main {
     public static final int MAX_N = 100;
+    public static final int LEN = 4;
     public static int n, currX, currY, currDir, cnt;
-    public static boolean range = true;
     public static char[][] grid = new char[MAX_N + 1][MAX_N + 1];
-    public static boolean[][] visited = new boolean[MAX_N + 1][MAX_N + 1];
+    public static boolean[][][] visited = new boolean[MAX_N + 1][MAX_N + 1][LEN];
     public static int[] dx = new int[]{0, 1, 0, -1};
     public static int[] dy = new int[]{1, 0, -1, 0};
 
@@ -23,7 +23,7 @@ public class Main {
     }
 
     public static void simulation() {
-        visited[currX][currY] = true;
+        visited[currX][currY][currDir] = true;
         int nx = currX + dx[currDir];
         int ny = currY + dy[currDir];
 
@@ -32,7 +32,7 @@ public class Main {
         }
 
         else if(!inRange(nx, ny)) {
-            currX = nx; currY = ny; cnt ++; range = false;
+            currX = nx; currY = ny; cnt ++;
         }
 
         else {
@@ -70,12 +70,11 @@ public class Main {
 
         currDir = 0;
 
-        while(inRange(currX, currY) && range) {
+        while(inRange(currX, currY) && !visited[currX][currY][currDir]) {
             simulation();
         }
 
-        if(cnt > 0) sb.append(cnt);
-        else sb.append(-1);
+        sb.append(cnt);
 
         bw.write(sb.toString());
         bw.flush();
