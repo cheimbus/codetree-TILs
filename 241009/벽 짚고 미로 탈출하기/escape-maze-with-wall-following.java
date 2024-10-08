@@ -70,11 +70,17 @@ public class Main {
 
         currDir = 0;
 
-        while(inRange(currX, currY) && !visited[currX][currY][currDir]) {
+        boolean move = false;
+        while(inRange(currX, currY)) {
+            if(visited[currX][currY][currDir]) {
+                move = true;
+                break;
+            }
             simulation();
         }
 
-        sb.append(cnt);
+        if(move) sb.append(-1);
+        else sb.append(cnt);
 
         bw.write(sb.toString());
         bw.flush();
