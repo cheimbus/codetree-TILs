@@ -10,41 +10,41 @@ public class Main {
     public static final int LEN = 4;
     public static int n, currX, currY, currDir, cnt;
     public static char[][] grid = new char[MAX_N + 1][MAX_N + 1];
-    public static boolean[][][] visited = new boolean[MAX_N + 1][MAX_N + 1][LEN];
     public static int[] dx = new int[]{0, 1, 0, -1};
     public static int[] dy = new int[]{1, 0, -1, 0};
+    public static boolean[][][] visited = new boolean[MAX_N + 1][MAX_N + 1][LEN];
 
     public static boolean inRange(int x, int y) {
         return 1 <= x && 1 <= y && x <= n && y <= n;
     }
 
-    public static boolean isWall(int x, int y) {
+    public static boolean wallEx(int x, int y) {
         return inRange(x, y) && grid[x][y] == '#';
     }
 
     public static void simulation() {
         visited[currX][currY][currDir] = true;
-        int nx = currX + dx[currDir];
-        int ny = currY + dy[currDir];
 
-        if(isWall(nx, ny)) {
+        int nextX = currX + dx[currDir];
+        int nextY = currY + dy[currDir];
+
+        if(wallEx(nextX, nextY)) {
             currDir = (currDir - 1 + 4) % 4;
         }
 
-        else if(!inRange(nx, ny)) {
-            currX = nx; currY = ny; cnt ++;
+        else if(!inRange(nextX, nextY)) {
+            currX = nextX; currY = nextY; cnt ++;
         }
 
         else {
-            int rx = nx + dx[(currDir + 1) % 4];
-            int ry = ny + dy[(currDir + 1) % 4];
+            int nx = nextX + dx[(currDir + 1) % 4];
+            int ny = nextY + dy[(currDir + 1) % 4];
 
-            if(isWall(rx, ry)) {
-                currX = nx; currY = ny; cnt ++;
+            if(wallEx(nx, ny)) {
+                currX = nextX; currY = nextY; cnt ++;
             }
             else {
-                currX = rx; currY = ry; cnt += 2;
-                currDir = (currDir + 1) % 4;
+                currX = nx; currY = ny; currDir = (currDir + 1 + 4) % 4; cnt += 2;
             }
         }
     }
@@ -66,20 +66,18 @@ public class Main {
             }
         }
 
-        StringBuilder sb = new StringBuilder();
-
         currDir = 0;
 
-        boolean move = false;
+        boolean isVisited = false;
         while(inRange(currX, currY)) {
             if(visited[currX][currY][currDir]) {
-                move = true;
+                isVisited = true;
                 break;
             }
             simulation();
         }
-
-        if(move) sb.append(-1);
+        StringBuilder sb = new StringBuilder();
+        if(isVisited) sb.append(-1);
         else sb.append(cnt);
 
         bw.write(sb.toString());
