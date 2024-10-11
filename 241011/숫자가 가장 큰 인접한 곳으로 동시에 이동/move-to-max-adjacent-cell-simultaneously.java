@@ -10,56 +10,61 @@ public class Main {
     public static final int LEN = 4;
     public static int n, m, t, cnt;
     public static int[][] grid = new int[MAX_N + 1][MAX_N + 1];
-    public static int[] dx = new int[]{-1, 1, 0, 0};
+    public static int[][] cntGrid = new int[MAX_N + 1][MAX_N + 1];
+    public static int[][] tmpGrid = new int[MAX_N + 1][MAX_N + 1];
+    public static int[] dx = new int[]{-1, 1, 0 ,0};
     public static int[] dy = new int[]{0, 0, -1, 1};
-    public static int[][] beads;
 
     public static boolean inRange(int x, int y) {
         return 1 <= x && 1 <= y && x <= n && y <= n;
     }
 
-    public static void move() {
-        for(int i = 0; i < m; i ++) {
-            int x = beads[i][0];
-            int y = beads[i][1];
-            int maxVal = 0;
-            int maxX = 0;
-            int maxY = 0;
-            for(int j = 0; j < LEN; j ++) {
-                int nx = x + dx[j];
-                int ny = y + dy[j];
-                if(inRange(nx, ny) && maxVal < grid[nx][ny]) {
-                    maxVal = grid[nx][ny];
-                    maxX = nx; maxY = ny;
-                }
+    public static void move(int x, int y) {
+
+        int maxVal = 0;
+        int rx = 0; int ry = 0;
+        for(int j = 0; j < LEN; j ++) {
+            int nx = x + dx[j];
+            int ny = y + dy[j];
+            if(inRange(nx, ny) && maxVal < grid[nx][ny]) {
+                maxVal = grid[nx][ny];
+                rx = nx; ry = ny;
             }
-            beads[i][0] = maxX;
-            beads[i][1] = maxY;
         }
+        tmpGrid[rx][ry] += 1;
     }
 
-    public static void count() {
-        int[][] cntGrid = new int[MAX_N + 1][MAX_N + 1];
-        for(int i = 0; i < m; i ++) {
-            int x = beads[i][0];
-            int y = beads[i][1];
-            cntGrid[x][y] += 1;
+    public static void countBeads() {
+        for(int i = 1; i <= n; i ++) {
+            for(int j = 1; j <= n; j ++) {
+                cntGrid[i][j] = tmpGrid[i][j];
+            }
         }
 
         int tmpCnt = 0;
-
         for(int i = 1; i <= n; i ++) {
             for(int j = 1; j <= n; j ++) {
-                if(cntGrid[i][j] == 1) tmpCnt ++;
+                if(cntGrid[i][j] > 1) cntGrid[i][j] = 0;
+                else if(cntGrid[i][j] == 1) tmpCnt ++;
             }
         }
-
         cnt = tmpCnt;
     }
 
     public static void simulation() {
-        move();
-        count();
+        for(int i = 1; i <= n; i ++) {
+            for(int j = 1; j <= n; j ++) {
+                tmpGrid[i][j] = 0;
+            }
+        }
+
+        for(int i = 1; i <= n; i ++) {
+            for(int j = 1; j <= n; j ++) {
+                if(cntGrid[i][j] == 1) move(i, j);
+            }
+        }
+
+        countBeads();
     }
 
     public static void main(String[] args) throws IOException {
@@ -79,17 +84,14 @@ public class Main {
             }
         }
 
-        beads = new int[m][2];
-
-        for(int i = 0; i < m; i ++) {
+        while(m -- > 0) {
             stk = new StringTokenizer(br.readLine());
             int x = Integer.parseInt(stk.nextToken());
             int y = Integer.parseInt(stk.nextToken());
-            beads[i][0] = x;
-            beads[i][1] = y;
+            cntGrid[x][y] = 1;
         }
 
-        while(t --> 0) {
+        while(t -- > 0) {
             simulation();
         }
 
