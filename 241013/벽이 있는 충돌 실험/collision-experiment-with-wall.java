@@ -7,7 +7,9 @@ import java.util.StringTokenizer;
 import java.util.ArrayList;
 
 class Marble {
-    int x; int y; int dir;
+    int x;
+    int y;
+    int dir;
     public Marble(int x, int y, int dir) {
         this.x = x;
         this.y = y;
@@ -16,64 +18,69 @@ class Marble {
 }
 
 public class Main {
-    public static final int LEN = 4;
+    public static final int MAX_N = 50;
     public static int t, n, m;
+    public static int[] ASCII_CODE = new int[128];
     public static ArrayList<Marble> marbleArr;
+    public static StringBuilder sb = new StringBuilder();
     public static int[] dx = new int[]{-1, 0, 0, 1};
     public static int[] dy = new int[]{0, 1, -1, 0};
-    public static int[] ASCII_CODE = new int[128];
-    public static StringBuilder sb = new StringBuilder();
+    public static int[][] cntGrid = new int[MAX_N + 1][MAX_N + 1];
 
     public static boolean inRange(int x, int y) {
         return 1 <= x && 1 <= y && x <= n && y <= n;
     }
 
-    public static Marble move(Marble marble) {
-        int x = marble.x; int y = marble.y; int dir = marble.dir;
-        int nx = x + dx[dir];
-        int ny = y + dy[dir];
-
+    public static Marble move(Marble currMarble) {
+        int nx = currMarble.x + dx[currMarble.dir];
+        int ny = currMarble.y + dy[currMarble.dir];
         if(inRange(nx, ny)) {
-            return new Marble(nx, ny, dir);
+            return new Marble(nx, ny, currMarble.dir);
         }
-        else return new Marble(x, y, 3 - dir);
+        else return new Marble(currMarble.x, currMarble.y, 3 - currMarble.dir);
     }
 
     public static void moveAll() {
         for(int i = 0; i < marbleArr.size(); i ++) {
-            Marble getMarble = marbleArr.get(i);
-            Marble newMarble = move(getMarble);
-            marbleArr.set(i, newMarble);
+            marbleArr.set(i, move(marbleArr.get(i)));
         }
     }
 
-    public static boolean duplicateMarbleEx(int idx) {
-        int targetX = marbleArr.get(idx).x;
-        int targetY = marbleArr.get(idx).y;
-        for(int i = 0; i < marbleArr.size(); i ++) {
-            if(idx == i) continue;
-            int nx = marbleArr.get(i).x;
-            int ny = marbleArr.get(i).y;
-            if(targetX == nx && targetY == ny) return true;
-        }
-        return false;
+    public static boolean isDuplicateMarble(int x, int y) {
+        if(cntGrid[x][y] >= 2) return true;
+        else return false;
     }
 
-    public static void deleteSamePosition() {
-        ArrayList<Marble> newMarbleArr = new ArrayList<>();
+    public static void removeDuplicateMarble() {
+        ArrayList<Marble> nextMarbleArr = new ArrayList<>();
 
         for(int i = 0; i < marbleArr.size(); i ++) {
-            if(!duplicateMarbleEx(i)) {
-                newMarbleArr.add(marbleArr.get(i));
+            int x = marbleArr.get(i).x;
+            int y = marbleArr.get(i).y;
+            cntGrid[x][y] ++;
+        }
+
+        for(int i = 0; i < marbleArr.size(); i ++) {
+            int x = marbleArr.get(i).x;
+            int y = marbleArr.get(i).y;
+            int dir = marbleArr.get(i).dir;
+            if(!isDuplicateMarble(x, y)) {
+                nextMarbleArr.add(new Marble(x, y, dir));
             }
         }
 
-        marbleArr = newMarbleArr;
+        for(int i = 0; i < marbleArr.size(); i ++) {
+            int x = marbleArr.get(i).x;
+            int y = marbleArr.get(i).y;
+            cntGrid[x][y] --;
+        }
+
+        marbleArr = nextMarbleArr;
     }
 
     public static void simulation() {
         moveAll();
-        deleteSamePosition();
+        removeDuplicateMarble();
     }
 
     public static void main(String[] args) throws IOException {
@@ -83,8 +90,8 @@ public class Main {
         t = Integer.parseInt(br.readLine());
 
         ASCII_CODE['U'] = 0;
-        ASCII_CODE['R'] = 1;
         ASCII_CODE['D'] = 3;
+        ASCII_CODE['R'] = 1;
         ASCII_CODE['L'] = 2;
 
         while(t -- > 0) {
@@ -100,7 +107,6 @@ public class Main {
                 int dir = ASCII_CODE[stk.nextToken().charAt(0)];
                 marbleArr.add(new Marble(x, y, dir));
             }
-
             for(int i = 0; i < n * 2; i ++) {
                 simulation();
             }
