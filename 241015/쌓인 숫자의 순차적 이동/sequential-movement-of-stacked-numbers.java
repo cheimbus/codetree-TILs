@@ -66,11 +66,8 @@ public class Main {
             if(isCurrVal) grid[nx][ny].add(grid[cx][cy].get(i));
         }
 
-        for(int i = grid[cx][cy].size() - 1; i >= 0 ; i --) {
-            if(grid[cx][cy].get(i) != currVal) {
-                grid[cx][cy].remove(i);
-                break;
-            }
+        while(grid[cx][cy].get(grid[cx][cy].size() - 1) != currVal) {
+            grid[cx][cy].remove(grid[cx][cy].size() - 1);
         }
         grid[cx][cy].remove(grid[cx][cy].size() - 1);
     }
