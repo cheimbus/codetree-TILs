@@ -1,4 +1,9 @@
-import java.util.Scanner;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -17,129 +22,129 @@ class Tuple implements Comparable<Tuple> {
     }
 }
 
-public class Main {
-    public static final int DIR_NUM = 4;
-    public static final int ASCII_NUM = 128;
-    public static final int MAX_N = 50;
+class Next {
+    int x, y, z;
+    public Next(int x, int y, int z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+}
 
-    public static int n, m, t, k;
-    public static ArrayList<Tuple>[][] grid = new ArrayList[MAX_N][MAX_N];
-    public static ArrayList<Tuple>[][] nextGrid = new ArrayList[MAX_N][MAX_N];
+public class Main {
+    public static final int MAX_N = 50;
+    public static int n, m, t, k, ans;
+    public static int[] ASCII_CODE = new int[128];
+    public static ArrayList<Tuple>[][] grid = new ArrayList[MAX_N + 1][MAX_N + 1];
+    public static ArrayList<Tuple>[][] tmpGrid = new ArrayList[MAX_N + 1][MAX_N + 1];
+    public static int[] dx = new int[]{-1, 0, 0, 1};
+    public static int[] dy = new int[]{0, 1, -1, 0};
 
     public static boolean inRange(int x, int y) {
-        return 0 <= x && x < n && 0 <= y && y < n;
+        return 1 <= x && 1 <= y && x <= n && y <= n;
     }
 
-    public static Tuple NextPos(int x, int y, int vnum, int moveDir) {
-        int[] dx = new int[]{-1, 0, 0, 1};
-        int[] dy = new int[]{0, 1, -1, 0};
-
-        // vnum 횟수만큼 이동한 이후의 위치를 반환합니다.
-        while(vnum-- > 0) {
-            int nx = x + dx[moveDir], ny = y + dy[moveDir];
-            // 벽에 부딪히면
-            // 방향을 바꾼 뒤 이동합니다.
+    public static Next moveNext(int x, int y, int v, int dir) {
+        while(v -- > 0) {
+            int nx = x + dx[dir], ny = y + dy[dir];
             if(!inRange(nx, ny)) {
-                moveDir = 3 - moveDir;
-                nx = x + dx[moveDir]; ny = y + dy[moveDir];
+                dir = 3 - dir;
+                nx = x + dx[dir]; ny = y + dy[dir];
             }
             x = nx; y = ny;
         }
-        return new Tuple(x, y, moveDir);
+        return new Next(x, y, dir);
     }
 
     public static void moveAll() {
-        for(int x = 0; x < n; x++)
-            for(int y = 0; y < n; y++)
-                for(int i = 0; i < (int) grid[x][y].size(); i++) {
-                    int v = grid[x][y].get(i).x;
-                    int num = grid[x][y].get(i).y;
-                    int moveDir = grid[x][y].get(i).z;
-
-                    int nextX, nextY, nextDir;
-                    nextX = NextPos(x, y, v, moveDir).x;
-                    nextY = NextPos(x, y, v, moveDir).y;
-                    nextDir = NextPos(x, y, v, moveDir).z;
-
-                    nextGrid[nextX][nextY].add(
-                            new Tuple(v, num, nextDir)
-                    );
+        for(int i = 1; i <= n; i ++) {
+            for(int j = 1; j <= n; j ++) {
+                for(int l = 0; l < grid[i][j].size(); l ++) {
+                    Tuple marble = grid[i][j].get(l);
+                    int v = marble.x, idx = marble.y, dir = marble.z;
+                        Next next = moveNext(i, j, v, dir);
+                        int nextX = next.x, nextY = next.y, nextDir = next.z;
+                        tmpGrid[nextX][nextY].add(
+                                new Tuple(v, idx, nextDir)
+                        );
                 }
+            }
+        }
     }
 
-    public static void selectMarbles() {
-        for(int i = 0; i < n; i++)
-            for(int j = 0; j < n; j++)
-                if((int) nextGrid[i][j].size() >= k) {
-                    // 우선순위가 높은 k개만 남겨줍니다.
-                    Collections.sort(nextGrid[i][j]);
-                    while((int) nextGrid[i][j].size() > k)
-                        nextGrid[i][j].remove(nextGrid[i][j].size() - 1);
+    public static void removeDuplicate() {
+        for(int i = 1; i <= n; i ++)
+            for(int j = 1; j <= n; j ++)
+                for(int l = 0; l < tmpGrid[i][j].size(); l ++) {
+                    if(tmpGrid[i][j].size() >= k) {
+                        Collections.sort(tmpGrid[i][j]);
+                        while(tmpGrid[i][j].size() > k) {
+                            tmpGrid[i][j].remove(tmpGrid[i][j].size() - 1);
+                        }
+                    }
                 }
     }
 
     public static void simulate() {
-        // Step1. nextGrid를 초기화합니다.
-        for(int i = 0; i < n; i++)
-            for(int j = 0; j < n; j++)
-                nextGrid[i][j] = new ArrayList<>();
+        for(int i = 1; i <= n; i ++)
+            for(int j = 1; j <= n; j ++)
+                tmpGrid[i][j] = new ArrayList<>();
 
-        // Step2. 구슬들을 전부 움직입니다.
         moveAll();
+        removeDuplicate();
 
-        // Step3. 각 칸마다 구슬이 최대 k개만 있도록 조정합니다.
-        selectMarbles();
-
-        // Step4. nextGrid 값을 grid로 옮겨줍니다.
-        for(int i = 0; i < n; i++)
-            for(int j = 0; j < n; j++)
-                grid[i][j] = (ArrayList<Tuple>) nextGrid[i][j].clone();
+        for(int i = 1; i <= n; i ++)
+            for(int j = 1; j <= n; j ++)
+                grid[i][j] = tmpGrid[i][j];
     }
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        n = sc.nextInt();
-        m = sc.nextInt();
-        t = sc.nextInt();
-        k = sc.nextInt();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer stk = new StringTokenizer(br.readLine());
 
-        for(int i = 0; i < n; i++)
-            for(int j = 0; j < n; j++)
+        n = Integer.parseInt(stk.nextToken());
+        m = Integer.parseInt(stk.nextToken());
+        t = Integer.parseInt(stk.nextToken());
+        k = Integer.parseInt(stk.nextToken());
+
+        ASCII_CODE['U'] = 0;
+        ASCII_CODE['D'] = 3;
+        ASCII_CODE['R'] = 1;
+        ASCII_CODE['L'] = 2;
+
+        for(int i = 1; i <= n; i ++)
+            for(int j = 1; j <= n; j ++)
                 grid[i][j] = new ArrayList<>();
 
-        for(int i = 0; i < n; i++)
-            for(int j = 0; j < n; j++)
-                nextGrid[i][j] = new ArrayList<>();
+        for(int i = 1; i <= n; i ++)
+            for(int j = 1; j <= n; j ++)
+                tmpGrid[i][j] = new ArrayList<>();
 
-        int[] dirMapper = new int[ASCII_NUM];
-        dirMapper['U'] = 0;
-        dirMapper['R'] = 1;
-        dirMapper['L'] = 2;
-        dirMapper['D'] = 3;
+        for(int i = 1; i <= m; i ++) {
+            stk = new StringTokenizer(br.readLine());
+            int x = Integer.parseInt(stk.nextToken());
+            int y = Integer.parseInt(stk.nextToken());
+            int dir = ASCII_CODE[stk.nextToken().charAt(0)];
+            int v = Integer.parseInt(stk.nextToken());
 
-        for(int i = 0; i < m; i++) {
-            int r = sc.nextInt();
-            int c = sc.nextInt();
-            char d = sc.next().charAt(0);
-            int v = sc.nextInt();
-
-            // 살아남는 구슬의 우선순위가 더 빠른 속도, 더 큰 번호 이므로
-            // 정렬시 속도가 먼저 내림차순, 그 다음에는 번호가 내림차순으로 오도록
-            // (-속도, -번호, 방향) 순서를 유지합니다.
-            grid[r - 1][c - 1].add(
-                    new Tuple(v, (i + 1), dirMapper[d])
+            grid[x][y].add(
+                    new Tuple(v, i, dir)
             );
         }
 
-        // t초에 걸쳐 시뮬레이션을 반복합니다.
-        while(t-- > 0)
+        while(t -- > 0) {
             simulate();
+        }
 
-        int ans = 0;
-        for(int i = 0; i < n; i++)
-            for(int j = 0; j < n; j++)
-                ans += (int) grid[i][j].size();
+        for(int i = 1; i <= n; i ++)
+            for(int j = 1; j <= n; j ++)
+                for(int l = 0; l < grid[i][j].size(); l ++)
+                    if(!grid[i][j].isEmpty()) ans ++;
 
-        System.out.print(ans);
+        bw.write(ans + "\n");
+        bw.flush();
+        bw.close();
+        br.close();
     }
 }
