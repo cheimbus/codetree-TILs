@@ -20,8 +20,8 @@ public class Main {
     public static final int MAX_M = 100;
     public static final int LEN = 4;
     public static int n, m;
-    public static int[][] grid = new int[MAX_N + 1][MAX_M + 1];
-    public static boolean[][] visited = new boolean[MAX_N + 1][MAX_M + 1];
+    public static int[][] grid = new int[MAX_N][MAX_M];
+    public static boolean[][] visited = new boolean[MAX_N][MAX_M];
     public static Queue<Pair> q = new LinkedList<>();
     public static int[] dx = new int[]{-1, 0, 1, 0};
     public static int[] dy = new int[]{0, 1, 0, -1};
@@ -32,7 +32,7 @@ public class Main {
     }
 
     public static boolean inRange(int x, int y) {
-        return 0 <= x && 0 <= y && x < n && y < n;
+        return 0 <= x && 0 <= y && x < n && y < m;
     }
 
     public static void BFS() {
