@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 
 public class Main {
     public static final int MAX_N = 50;
-    public static int n, m, maxCnt = 0, currK;
+    public static int n, m, maxCnt = 0, currK = 1;
     public static int[][] grid = new int[MAX_N + 1][MAX_N + 1];
     public static boolean[][] visited = new boolean[MAX_N + 1][MAX_N + 1];
     public static int[] dx = new int[]{1, 0, -1, 0};
