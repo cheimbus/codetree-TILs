@@ -16,9 +16,7 @@ class Tuple implements Comparable<Tuple> {
     }
     @Override
     public int compareTo(Tuple b) {
-        if(x != b.x) return b.x - x;
-        if(y != b.y) return y - b.y;
-        return b.z - z;
+        return b.x - x;
     }
 }
 
@@ -62,14 +60,14 @@ public class Main {
             for(int j = 1; j <= n; j++)
                 for(int l = 0; l < grid[i][j].size(); l ++) {
                     Tuple marble = grid[i][j].get(l);
-                    int w = marble.x;
-                    int idx = marble.y;
+                    int idx = marble.x;
+                    int w = marble.y;
                     int dir = marble.z;
                     Next next = move(i, j, dir);
                     int nx = next.x;
                     int ny = next.y;
                     int nDir = next.z;
-                    tmpGrid[nx][ny].add(new Tuple(w, idx, nDir));
+                    tmpGrid[nx][ny].add(new Tuple(idx, w, nDir));
                 }
     }
 
@@ -83,14 +81,14 @@ public class Main {
                     Tuple firstMarble = tmpGrid[i][j].get(0);
 
                     for(int l = 0; l < tmpGrid[i][j].size(); l ++) {
-                        weight += tmpGrid[i][j].get(l).x;
+                        weight += tmpGrid[i][j].get(l).y;
                     }
 
                     while(!tmpGrid[i][j].isEmpty()) {
                         tmpGrid[i][j].remove(tmpGrid[i][j].size() - 1);
                     }
 
-                    tmpGrid[i][j].add(new Tuple(weight, firstMarble.y, firstMarble.z));
+                    tmpGrid[i][j].add(new Tuple(firstMarble.x, weight, firstMarble.z));
                 }
             }
     }
@@ -103,8 +101,8 @@ public class Main {
             for(int j = 1; j <= n; j ++) {
                 if(!grid[i][j].isEmpty()) {
                     marbleCnt += grid[i][j].size();
-                    if(maxVal < grid[i][j].get(0).x) {
-                        maxVal = grid[i][j].get(0).x;
+                    if(maxVal < grid[i][j].get(0).y) {
+                        maxVal = grid[i][j].get(0).y;
                     }
                 }
             }
@@ -120,10 +118,6 @@ public class Main {
 
         moveAll();
         removeDuplicate();
-
-        for(int i = 1; i <= n; i ++)
-            for(int j = 1; j <= n; j ++)
-                grid[i][j] = new ArrayList<>();
 
         for(int i = 1; i <= n; i ++)
             for(int j = 1; j <= n; j ++)
@@ -157,7 +151,7 @@ public class Main {
             int dir = ASCII_CODE[stk.nextToken().charAt(0)];
             int w = Integer.parseInt(stk.nextToken());
 
-            grid[x][y].add(new Tuple(w, i, dir));
+            grid[x][y].add(new Tuple(i, w, dir));
         }
 
         while(t -- > 0) {
