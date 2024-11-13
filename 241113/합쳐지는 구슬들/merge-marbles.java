@@ -32,9 +32,9 @@ class Next {
 public class Main {
     public static final int MAX_N = 50;
     public static int n, m, t, cnt, maxW;
-    public static int[] ASCII_CODE = new int[128];
     public static ArrayList<Tuple>[][] grid = new ArrayList[MAX_N + 1][MAX_N + 1];
     public static ArrayList<Tuple>[][] tmpGrid = new ArrayList[MAX_N + 1][MAX_N + 1];
+    public static int[] ASCII_CODE = new int[128];
     public static int[] dx = new int[]{-1, 0, 0, 1};
     public static int[] dy = new int[]{0, 1, -1, 0};
 
@@ -57,53 +57,53 @@ public class Main {
 
     public static void moveAll() {
         for(int i = 1; i <= n; i ++)
-            for(int j = 1; j <= n; j++)
-                for(int l = 0; l < grid[i][j].size(); l ++) {
-                    Tuple marble = grid[i][j].get(l);
+            for(int j = 1; j <= n; j ++) {
+                if(!grid[i][j].isEmpty()) {
+                    Tuple marble = grid[i][j].get(0);
                     int idx = marble.x;
                     int w = marble.y;
                     int dir = marble.z;
+
                     Next next = move(i, j, dir);
                     int nx = next.x;
                     int ny = next.y;
                     int nDir = next.z;
+
                     tmpGrid[nx][ny].add(new Tuple(idx, w, nDir));
-                }
-    }
-
-    public static void removeDuplicate() {
-        for(int i = 1; i <= n; i ++)
-            for(int j = 1; j <= n; j ++) {
-                int weight = 0;
-
-                if(!tmpGrid[i][j].isEmpty()) {
-                    Collections.sort(tmpGrid[i][j]);
-                    Tuple firstMarble = tmpGrid[i][j].get(0);
-
-                    for(int l = 0; l < tmpGrid[i][j].size(); l ++) {
-                        weight += tmpGrid[i][j].get(l).y;
-                    }
-
-                    while(!tmpGrid[i][j].isEmpty()) {
-                        tmpGrid[i][j].remove(tmpGrid[i][j].size() - 1);
-                    }
-
-                    tmpGrid[i][j].add(new Tuple(firstMarble.x, weight, firstMarble.z));
                 }
             }
     }
 
-    public static void findMarbleCntAndMaxWeight() {
+    public static void removeDuplicate() {
+        for(int i = 1; i <= n; i ++)
+            for(int j = 1; j <= n; j ++)
+                for(int l = 0; l < tmpGrid[i][j].size(); l ++) {
+                    int plusWeight = 0;
+                    if(!tmpGrid[i][j].isEmpty()) {
+                        Collections.sort(tmpGrid[i][j]);
+                        Tuple firstMarble = tmpGrid[i][j].get(0);
+
+                        for(int k = 0; k < tmpGrid[i][j].size(); k ++) {
+                            plusWeight += tmpGrid[i][j].get(k).y;
+                        }
+
+                        while(!tmpGrid[i][j].isEmpty()) {
+                            tmpGrid[i][j].remove(tmpGrid[i][j].size() - 1);
+                        }
+
+                        tmpGrid[i][j].add(new Tuple(firstMarble.x, plusWeight, firstMarble.z));
+                    }
+                }
+    }
+
+    public static void findCntAndMaxWeight() {
         int maxVal = 0;
         int marbleCnt = 0;
-
         for(int i = 1; i <= n; i ++)
             for(int j = 1; j <= n; j ++) {
-                if(!grid[i][j].isEmpty()) {
-                    marbleCnt += grid[i][j].size();
-                    if(maxVal < grid[i][j].get(0).y) {
-                        maxVal = grid[i][j].get(0).y;
-                    }
+                if(!tmpGrid[i][j].isEmpty()) {
+                    marbleCnt += tmpGrid[i][j].size();
+                    if(maxVal < tmpGrid[i][j].get(0).y) maxVal = tmpGrid[i][j].get(0).y;
                 }
             }
 
@@ -118,12 +118,11 @@ public class Main {
 
         moveAll();
         removeDuplicate();
+        findCntAndMaxWeight();
 
         for(int i = 1; i <= n; i ++)
             for(int j = 1; j <= n; j ++)
                 grid[i][j] = tmpGrid[i][j];
-
-        findMarbleCntAndMaxWeight();
     }
 
     public static void main(String[] args) throws IOException {
@@ -144,7 +143,7 @@ public class Main {
             for(int j = 1; j <= n; j ++)
                 grid[i][j] = new ArrayList<>();
 
-        for(int i = 1; i <= m; i++) {
+        for(int i = 1; i <= m; i ++) {
             stk = new StringTokenizer(br.readLine());
             int x = Integer.parseInt(stk.nextToken());
             int y = Integer.parseInt(stk.nextToken());
