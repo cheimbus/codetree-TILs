@@ -17,7 +17,7 @@ class Tuple implements Comparable<Tuple> {
     @Override
     public int compareTo(Tuple b) {
         if(x != b.x) return b.x - x;
-        if(y != b.y) return b.y - y;
+        if(y != b.y) return y - b.y;
         return b.z - z;
     }
 }
