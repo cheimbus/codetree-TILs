@@ -123,6 +123,10 @@ public class Main {
 
         for(int i = 1; i <= n; i ++)
             for(int j = 1; j <= n; j ++)
+                grid[i][j] = new ArrayList<>();
+
+        for(int i = 1; i <= n; i ++)
+            for(int j = 1; j <= n; j ++)
                 grid[i][j] = tmpGrid[i][j];
 
         findMarbleCntAndMaxWeight();
