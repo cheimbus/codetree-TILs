@@ -18,15 +18,15 @@ public class Main {
     public static final int MAX_N = 20;
     public static int n, ans;
     public static int[][] grid = new int[MAX_N][MAX_N];
+    public static int[][] bombType = new int[MAX_N][MAX_N];
+    public static boolean[][] bombed = new boolean[MAX_N][MAX_N];
+    public static ArrayList<Pair> bombs = new ArrayList<>();
     public static Pair[][] bombShape = new Pair[][]{
             {},
             {new Pair(-2, 0), new Pair(-1, 0), new Pair(0, 0), new Pair(1, 0), new Pair(2, 0)},
             {new Pair(-1, 0), new Pair(0, 0), new Pair(0, 1), new Pair(0, -1), new Pair(1, 0)},
             {new Pair(-1, -1), new Pair(-1, 1), new Pair(0, 0), new Pair(1, -1), new Pair(1, 1)}
     };
-    public static ArrayList<Pair> arr = new ArrayList<>();
-    public static int[][] bombType = new int[MAX_N][MAX_N];
-    public static boolean[][] bombed = new boolean[MAX_N][MAX_N];
 
     public static boolean inRange(int x, int y) {
         return 0 <= x && 0 <= y && x < n && y < n;
@@ -64,15 +64,15 @@ public class Main {
     }
 
     public static void recursion(int currNum) {
-        if(currNum == arr.size()) {
+        if(currNum == bombs.size()) {
             ans = Math.max(ans, calc());
             return;
         }
 
         for(int i = 1; i <= 3; i ++) {
-            Pair bombPos = arr.get(currNum);
-            int x = bombPos.x;
-            int y = bombPos.y;
+            Pair pos = bombs.get(currNum);
+            int x = pos.x;
+            int y = pos.y;
             bombType[x][y] = i;
             recursion(currNum + 1);
             bombType[x][y] = 0;
@@ -95,7 +95,7 @@ public class Main {
 
         for(int i = 0; i < n; i ++)
             for(int j = 0; j < n; j ++) {
-                if(grid[i][j] == 1) arr.add(new Pair(i, j));
+                if(grid[i][j] == 1) bombs.add(new Pair(i, j));
             }
 
         recursion(0);
