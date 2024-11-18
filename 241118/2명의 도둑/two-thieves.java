@@ -35,15 +35,16 @@ public class Main {
         return maxVal;
     }
 
+    public static boolean isRange(int a, int b, int c, int d) {
+        return !(b < c || d < a);
+    }
+
     public static boolean possible(int x1, int y1, int x2, int y2) {
         if(y1 + m - 1 >= n || y2 + m - 1 >= n) return false;
 
         if(x1 != x2) return true;
 
-        int ny1 = y1 + m - 1;
-        int ny2 = y2 + m - 1;
-
-        if(ny1 > y2 || ny2 > y1) return false;
+        if(isRange(y1, y1 + m - 1, y2, y2 + m - 1)) return false;
 
         return true;
     }
