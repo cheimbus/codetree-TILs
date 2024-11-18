@@ -1,41 +1,60 @@
-import java.util.*;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
 
 public class Main {
-    static String str;
-    static int ans = Integer.MIN_VALUE;
+    public static String str;
+    public static int ans = Integer.MIN_VALUE;
+    public static int[] arr = new int[6];
+    public static int len;
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        str = sc.next();
-        int[] charToInt = new int[128];
-
-        solve((int) 'a', charToInt);
-        System.out.println(ans);
+    public static int getNum(int n) {
+        return arr[str.charAt(n) - 'a'];
     }
 
-    private static void solve(int local, int[] charToInt) {
-        if(local == ((int) 'f') + 1) {
-            int num = charToInt[str.charAt(0)];
+    public static int calc() {
+        int val = getNum(0);
 
-            for(int i = 2; i < str.length(); i += 2) {
-                char temp = str.charAt(i - 1);
-                if(temp == '-') {
-                    num -= charToInt[str.charAt(i)];
-                } else if(temp == '+') {
-                    num += charToInt[str.charAt(i)];
-                } else {
-                    num *= charToInt[str.charAt(i)];
-                }
+        for(int i = 2; i < len; i += 2) {
+            if(str.charAt(i - 1) == '+') {
+                val += getNum(i);
             }
+            else if(str.charAt(i - 1) == '-') {
+                val -= getNum(i);
+            }
+            else {
+                val *= getNum(i);
+            }
+        }
+        return val;
+    }
 
-            ans = Math.max(ans, num);
+    public static void recursion(int currNum) {
+        if(currNum == 6) {
+            ans = Math.max(ans, calc());
             return;
         }
 
-        for(int i = 1; i <= 4; i++) {
-            charToInt[local] = i;
-            solve(local + 1, charToInt);
-            charToInt[local] = 1;
+        for(int i = 1; i <= 4; i ++) {
+            arr[currNum] = i;
+            recursion(currNum + 1);
         }
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        str = br.readLine();
+        len = str.length();
+
+        recursion(0);
+
+        bw.write(ans + "");
+        bw.flush();
+        bw.close();
+        br.close();
     }
 }
