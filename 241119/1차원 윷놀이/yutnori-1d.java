@@ -12,18 +12,20 @@ public class Main {
     public static int[] turns = new int[MAX_N];
     public static int[] arr = new int[MAX_K];
 
-    public static void calc() {
+    public static int calc() {
         int c = 0;
         for(int i = 0; i < k; i ++) {
             if(arr[i] >= m) c ++;
         }
 
-        cnt = Math.max(cnt, c);
+        return c;
     }
 
     public static void recursion(int currNum) {
+
+        cnt = Math.max(cnt, calc());
+
         if(currNum == n) {
-            calc();
             return;
         }
 
