@@ -21,6 +21,7 @@ public class Main {
                     cnt ++;
                     if(cnt == 3) return false;
                 }
+                else cnt = 0;
             }
         }
         return isPossible;
