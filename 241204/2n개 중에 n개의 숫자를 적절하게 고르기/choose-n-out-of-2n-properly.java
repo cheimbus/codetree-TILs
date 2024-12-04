@@ -10,28 +10,30 @@ public class Main {
     public static int n;
     public static int ans = Integer.MAX_VALUE;
     public static int[] arr;
-    public static int[] tmp;
     public static boolean[] visited;
-    public static StringBuilder sb = new StringBuilder();
 
     public static int calc() {
-        return tmp[0] - tmp[1];
+        int diff = 0;
+        for(int i = 0; i < 2 * n; i ++) {
+            diff = (visited[i] ? (diff + arr[i]) : (diff - arr[i]));
+        }
+        return Math.abs(diff);
     }
 
     public static void dfs(int depth, int at) {
-        if(depth == 2) {
+        if(at == n) {
             ans = Math.min(ans, calc());
             return;
         }
 
-        for(int i = at; i < arr.length; i ++) {
-            if(!visited[i]) {
-                visited[i] = true;
-                tmp[depth] = arr[i];
-                dfs(depth + 1, i + 1);
-                visited[i] = false;
-            }
+        if(depth == 2 * n) {
+            return;
         }
+
+        visited[depth] = true;
+        dfs(depth + 1, at + 1);
+        visited[depth] = false;
+        dfs(depth + 1, at);
     }
 
     public static void main(String[] args) throws IOException {
@@ -41,20 +43,11 @@ public class Main {
         n = Integer.parseInt(br.readLine());
 
         arr = new int[2 * n];
-        tmp = new int[2];
         visited = new boolean[2 * n];
 
         StringTokenizer stk = new StringTokenizer(br.readLine());
         for(int i = 0; i < 2 * n; i ++) {
             arr[i] = Integer.parseInt(stk.nextToken());
-        }
-
-        Arrays.sort(arr);
-
-        for(int i = 0; i < arr.length / 2; i ++) {
-            int val = arr[i];
-            arr[i] = arr[arr.length - 1 - i];
-            arr[arr.length - 1 - i] = val;
         }
 
         dfs(0, 0);
