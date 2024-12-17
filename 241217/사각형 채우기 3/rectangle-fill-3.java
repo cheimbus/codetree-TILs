@@ -21,7 +21,7 @@ public class Main {
             int cnt = 5;
 
             for(int i = 3; i <= n; i ++) {
-                visited[i] = visited[i - 1] + cnt * 3;
+                visited[i] = (visited[i - 1] + cnt * 3) % 1000000007;
                 cnt *= 3;
             }
         }
