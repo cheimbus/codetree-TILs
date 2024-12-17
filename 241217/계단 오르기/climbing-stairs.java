@@ -22,7 +22,7 @@ public class Main {
 
         int ans = recursion(n);
 
-        bw.write(ans + "");
+        bw.write(ans % 10007 + "");
         bw.flush();
     }
 }
