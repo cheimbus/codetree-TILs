@@ -9,7 +9,7 @@ public class Main {
 
         if(val <= 4) return visited[val] = 1;
 
-        return visited[val] = recursion(val - 2) + recursion(val - 3);
+        return visited[val] = (recursion(val - 2) + recursion(val - 3)) % 10007;
     }
 
     public static void main(String[] args) throws IOException {
@@ -19,10 +19,9 @@ public class Main {
         n = Integer.parseInt(br.readLine());
         visited = new int[n + 1];
 
-
         int ans = recursion(n);
 
-        bw.write(ans % 10007 + "");
+        bw.write(ans + "");
         bw.flush();
     }
 }
