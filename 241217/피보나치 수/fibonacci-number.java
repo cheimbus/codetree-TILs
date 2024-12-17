@@ -7,6 +7,7 @@ public class Main {
 
     public static int fibo(int val) {
         if(visited[val] != 0) return visited[val];
+        if(val <= 2) return 1;
 
         return visited[val] = fibo(val - 1) + fibo(val - 2);
     }
@@ -16,11 +17,9 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         n = Integer.parseInt(br.readLine());
-        visited = new int[n];
-        visited[0] = 1;
-        visited[1] = 1;
+        visited = new int[n + 1];
 
-        int ans = fibo(n - 1);
+        int ans = fibo(n);
 
         bw.write(ans + "");
         bw.flush();
