@@ -25,6 +25,11 @@ public class Main {
                     dp[i] = dp[j] + 1;
                     break;
                 }
+                else if(arr[i] == arr[j]) {
+                    dp[i] = dp[j];
+                    break;
+                }
+                else dp[i] = 1;
             }
         }
 
