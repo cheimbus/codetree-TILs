@@ -16,20 +16,15 @@ public class Main {
         StringTokenizer stk = new StringTokenizer(br.readLine());
         for(int i = 0; i < n; i ++) {
             arr[i] = Integer.parseInt(stk.nextToken());
+            dp[i] = 1;
         }
 
         dp[0] = 1;
         for(int i = 0; i < n; i ++) {
             for(int j = i - 1; j >= 0; j --) {
                 if(arr[i] > arr[j]) {
-                    dp[i] = dp[j] + 1;
-                    break;
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
                 }
-                else if(arr[i] == arr[j]) {
-                    dp[i] = dp[j];
-                    break;
-                }
-                else dp[i] = 1;
             }
         }
 
