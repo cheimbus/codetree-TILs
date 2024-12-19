@@ -8,9 +8,7 @@ public class Main {
     public static int find(int val) {
         if(dp[val] != 0) return dp[val];
 
-        if(val == 2) return dp[val] = 1;
-        if(val == 3) return dp[val] = 1;
-        if(val == 4) return dp[val] = 2;
+        if(val <= 4) return dp[val] = 1;
 
         return dp[val] = (find(val - 2) + find(val - 3)) % 10007;
     }
