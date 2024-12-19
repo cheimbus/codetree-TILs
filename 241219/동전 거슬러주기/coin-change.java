@@ -31,7 +31,7 @@ public class Main {
         for(int i = 1; i <= m; i ++) {
             for(int j = 0; j < n; j ++) {
                 if(i >= arr[j]) {
-                    if(dp[i - arr[j]] == -1) continue;
+                    if(dp[i - arr[j]] == MAX_VAL) continue;
                     else {
                         dp[i] = Math.min(dp[i], dp[i - arr[j]] + 1);
                     }
