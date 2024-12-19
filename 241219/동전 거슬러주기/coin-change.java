@@ -40,6 +40,7 @@ public class Main {
         }
 
         int ans = dp[m];
+        if(ans == MAX_VAL) ans = -1;
         bw.write(ans + "");
         bw.flush();
     }
