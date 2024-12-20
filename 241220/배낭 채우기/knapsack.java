@@ -3,6 +3,8 @@ import java.util.*;
 
 public class Main {
     public static int n, m;
+    public static int[] w;
+    public static int[] v;
     public static int[][] dp;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -11,30 +13,30 @@ public class Main {
 
         n = Integer.parseInt(stk.nextToken());
         m = Integer.parseInt(stk.nextToken());
+        w = new int[n + 1];
+        v = new int[n + 1];
+        dp = new int[n + 1][m + 1];
 
-        dp = new int[2][m + 1];
-
-        dp[0][0] = 1;
-
-        for(int i = 0; i < n; i ++) {
+        for(int i = 1; i <= n; i ++) {
             stk = new StringTokenizer(br.readLine());
-            int w = Integer.parseInt(stk.nextToken());
-            int v = Integer.parseInt(stk.nextToken());
+            w[i] = Integer.parseInt(stk.nextToken());
+            v[i] = Integer.parseInt(stk.nextToken());
+        }
 
+        for(int i = 1; i <= n; i ++) {
             for(int j = m; j >= 0; j --) {
-                if(j >= w) {
-                    if(dp[0][j - w] == 0) continue;
-                    else {
-                        dp[0][j] += dp[0][j - w];
-                        dp[1][j] = Math.max(dp[1][j], dp[1][j - w] + v);
-                    }
+                if(j >= w[i]) {
+                    dp[i][j] = Math.max(dp[i - 1][j - w[i]] + v[i], dp[i - 1][j]);
+                }
+                else {
+                    dp[i][j] = dp[i - 1][j];
                 }
             }
         }
 
         int ans = 0;
         for(int i = 0; i <= m; i ++) {
-            ans = Math.max(ans, dp[1][i]);
+            ans = Math.max(ans, dp[n][i]);
         }
         bw.write(ans + "");
         bw.flush();
