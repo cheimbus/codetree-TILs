@@ -4,7 +4,7 @@ import java.util.*;
 public class Main {
     public static int n, m;
     public static int[] arr;
-    public static int[] dp;
+    public static long[] dp;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -14,7 +14,7 @@ public class Main {
         m = Integer.parseInt(stk.nextToken());
 
         arr = new int[n];
-        dp = new int[m + 1];
+        dp = new long[m + 1];
 
         stk = new StringTokenizer(br.readLine());
         for(int i = 0; i < n; i ++) {
