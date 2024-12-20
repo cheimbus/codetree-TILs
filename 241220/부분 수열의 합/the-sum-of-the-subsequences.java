@@ -34,7 +34,7 @@ public class Main {
         }
 
         boolean ez = false;
-        if(dp[m] > 0) ez = true;
+        if(dp[m] != 0) ez = true;
 
         StringBuilder sb = new StringBuilder();
         if(ez) sb.append("Yes");
