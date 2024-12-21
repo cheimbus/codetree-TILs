@@ -16,9 +16,9 @@ public class Main {
         StringTokenizer stk = new StringTokenizer(br.readLine());
         for(int i = 1; i <= n; i ++) {
             arr[i] = Integer.parseInt(stk.nextToken());
+            dp[i] = 1;
         }
 
-        dp[1] = 1;
         for(int i = 1; i <= n; i ++) {
             for(int j = i - 1; j >= 0; j --) {
                 if(arr[i] < arr[j]) {
