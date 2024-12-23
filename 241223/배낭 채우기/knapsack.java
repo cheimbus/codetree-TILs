@@ -40,6 +40,9 @@ public class Main {
         }
 
         int ans = dp[m];
+        for(int i = 1; i <= m; i ++) {
+            ans = Math.max(ans, dp[i]);
+        }
 
         bw.write(ans + "");
         bw.flush();
