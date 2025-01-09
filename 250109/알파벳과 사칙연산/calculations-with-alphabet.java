@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Main {
     public static String s;
-    public static int n, ans;
+    public static int n, ans = Integer.MIN_VALUE;
     public static int[] arr = new int[6];
 
     public static int find(int val) {
