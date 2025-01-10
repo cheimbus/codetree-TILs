@@ -21,7 +21,7 @@ public class Main {
         if(depth == n) return;
 
         for(int i = 0; i < k; i ++) {
-            if(arr[i] >= m) continue;
+            
 
             arr[i] += tmp[depth];
             dfs(depth + 1);
