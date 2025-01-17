@@ -59,6 +59,7 @@ public class Main {
             stk = new StringTokenizer(br.readLine());
             int x = Integer.parseInt(stk.nextToken());
             int y = Integer.parseInt(stk.nextToken());
+            visited[x][y] = true;
             q.add(new Pair(x, y));
             bfs();
         }
