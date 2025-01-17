@@ -17,9 +17,10 @@ public class Main {
     public static Queue<Pair> q = new LinkedList<>();
     public static int[] dx = new int[]{-1, 1, 0, 0};
     public static int[] dy = new int[]{0, 0, -1, 1};
-
+//    public static StringBuilder sb = new StringBuilder();
+    
     public static boolean inRange(int x, int y) {
-        return 1 <= x && 1 <= y && x <= n && y <= n && !visited[x][y] && grid[x][y] == 1;
+        return 1 <= x && 1 <= y && x <= n && y <= m && !visited[x][y] && grid[x][y] == 1;
     }
 
     public static void bfs() {
