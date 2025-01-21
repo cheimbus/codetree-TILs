@@ -77,10 +77,12 @@ public class Main {
             q.add(new Tuple(x, y, grid[x][y]));
             bfs();
             Collections.sort(arr);
-            Tuple t = arr.get(0);
-            x = t.x;
-            y = t.y;
-            currVal = grid[x][y];
+            if(!arr.isEmpty()) {
+                Tuple t = arr.get(0);
+                x = t.x;
+                y = t.y;
+                currVal = grid[x][y];
+            }
         }
 
         bw.write(x + " " + y);
