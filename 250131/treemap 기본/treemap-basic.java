@@ -32,12 +32,14 @@ public class Main {
             }
             else if(s.equals("print_list")) {
                 Iterator<Entry<Integer, Integer>> im = tm.entrySet().iterator();
+                if(!im.hasNext()) sb.append("None").append("\n");
                 while(im.hasNext()) {
                     Entry<Integer, Integer> e = im.next();
                     int val = e.getValue();
                     sb.append(val + " ");
                 }
                 sb.append("\n");
+
             }
         }
 
