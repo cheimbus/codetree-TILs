@@ -11,26 +11,17 @@ public class Main {
         int n = Integer.parseInt(stk.nextToken());
         int m = Integer.parseInt(stk.nextToken());
 
-        int[] dp = new int[m + 1];
         int[] arr = new int[n];
 
         for(int i = 0; i < n; i ++) {
             arr[i] = Integer.parseInt(br.readLine());
         }
 
-        for(int i = 1; i <= m; i ++) {
-            dp[i] = Integer.MAX_VALUE;
+        int val = 0;
+        for(int i = n - 1; i >= 0; i --) {
+            val += m / arr[i];
+            m %= arr[i];
         }
-
-        for(int i = 1; i <= m; i ++) {
-            for(int j = 0; j < n; j ++) {
-                if(i - arr[j] >= 0) {
-                    dp[i] = Math.min(dp[i], dp[i - arr[j]] + 1);
-                }
-            }
-        }
-
-        int val = dp[m];
 
         bw.write(val + "");
         bw.flush();
